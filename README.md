@@ -1,1 +1,1 @@
-# -josie-cosy-guide
+# josie-cosy-guide
