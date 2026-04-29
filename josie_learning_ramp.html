@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josie's Learning Ramp · Cosy Direct</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --ink: #1c1c1e;
+    --green: #2d6a4f;
+    --green-light: #e8f5ee;
+    --green-mid: #a7d7bc;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --blue: #1d4ed8;
+    --blue-light: #eff6ff;
+    --purple: #6d28d9;
+    --purple-light: #f5f3ff;
+    --orange: #c2410c;
+    --orange-light: #fff7ed;
+    --muted: #6b7280;
+    --border: #e5e0d6;
+    --tick: #16a34a;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 20px 100px;
+  }
+
+  /* HEADER */
+  .header { margin-bottom: 48px; }
+
+  .brand-bar {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 24px;
+  }
+  .brand-pill {
+    background: var(--green); color: white; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  }
+  .brand-sub { font-size: 12px; color: var(--muted); }
+
+  h1 {
+    font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700;
+    line-height: 1.08; color: var(--ink); margin-bottom: 14px;
+  }
+  h1 em { font-style: italic; font-weight: 400; color: var(--green); }
+
+  .header-intro {
+    font-size: 15px; color: var(--muted); max-width: 580px; line-height: 1.65;
+    border-left: 3px solid var(--green); padding-left: 16px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 40px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .progress-label { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .progress-track {
+    flex: 1; height: 10px; background: var(--bg);
+    border-radius: 100px; overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%; background: var(--green);
+    border-radius: 100px; transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-pct {
+    font-size: 20px; font-weight: 600; color: var(--green);
+    font-family: 'Playfair Display', serif; white-space: nowrap;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 36px; }
+
+  .section-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; border-radius: 8px 8px 0 0;
+    cursor: pointer; user-select: none;
+    border: 1px solid transparent;
+  }
+
+  .section-head.green  { background: var(--green); color: white; }
+  .section-head.amber  { background: var(--amber); color: white; }
+  .section-head.blue   { background: var(--blue); color: white; }
+  .section-head.purple { background: var(--purple); color: white; }
+  .section-head.orange { background: var(--orange); color: white; }
+
+  .section-icon { font-size: 22px; flex-shrink: 0; }
+
+  .section-meta { flex: 1; }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
+  }
+  .section-strap { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+
+  .section-counter {
+    font-size: 12px; font-weight: 600; opacity: 0.85; white-space: nowrap; text-align: right;
+  }
+
+  .section-body {
+    background: white; border: 1px solid var(--border);
+    border-top: none; border-radius: 0 0 8px 8px;
+    overflow: hidden;
+  }
+
+  /* SUBSECTION */
+  .subsection { border-bottom: 1px solid var(--border); }
+  .subsection:last-child { border-bottom: none; }
+
+  .subsection-label {
+    padding: 12px 20px 6px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ITEM */
+  .item {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: start;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f5f1ea;
+    transition: background 0.15s;
+    gap: 4px;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: #fafaf7; }
+  .item.done { background: #f0faf4; }
+
+  /* CHECKBOX */
+  .cb-wrap {
+    display: flex; align-items: flex-start; padding-top: 2px;
+  }
+  input[type=checkbox] { display: none; }
+  .cb {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    transition: all 0.2s; background: white;
+  }
+  .cb:hover { border-color: var(--green); }
+  .cb.checked { background: var(--green); border-color: var(--green); }
+  .cb.checked::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+
+  /* ITEM BODY */
+  .item-body { padding: 0 8px; }
+
+  .item-title {
+    font-size: 14px; font-weight: 500; color: var(--ink);
+    line-height: 1.4; transition: color 0.2s;
+  }
+  .item.done .item-title { color: var(--muted); text-decoration: line-through; }
+
+  .item-desc {
+    font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5;
+  }
+  .item.done .item-desc { opacity: 0.6; }
+
+  /* TAGS & LINK */
+  .item-meta {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center;
+  }
+
+  .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    padding: 2px 8px; border-radius: 4px; text-transform: uppercase;
+  }
+  .tag-free { background: var(--green-light); color: var(--green); }
+  .tag-cert { background: var(--amber-light); color: var(--amber); }
+  .tag-week { background: var(--blue-light); color: var(--blue); }
+  .tag-essential { background: #fde8d8; color: var(--orange); }
+
+  .link-btn {
+    font-size: 11px; font-weight: 600; color: var(--blue);
+    text-decoration: none; border: 1px solid #bfdbfe;
+    padding: 2px 10px; border-radius: 4px;
+    background: var(--blue-light); transition: all 0.15s;
+    display: inline-block;
+  }
+  .link-btn:hover { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* ITEM RIGHT */
+  .item-time {
+    font-size: 11px; color: var(--muted); white-space: nowrap;
+    padding-top: 4px; text-align: right; min-width: 56px;
+  }
+
+  /* PHILOSOPHY BOX */
+  .philosophy {
+    background: var(--ink); color: white; border-radius: 8px;
+    padding: 28px 32px; margin-top: 40px;
+    font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.85);
+  }
+  .philosophy strong { color: #86efac; font-weight: 600; }
+  .philosophy em { color: white; font-style: italic; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 30px; }
+    .item { grid-template-columns: 38px 1fr; }
+    .item-time { display: none; }
+    .progress-wrap { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand-bar">
+    <span class="brand-pill">Cosy Direct</span>
+    <span class="brand-sub">E-Commerce & Digital Marketing Assistant</span>
+  </div>
+  <h1>Josie's<br><em>Learning Ramp</em></h1>
+  <p class="header-intro">Every skill in this role mapped to a real course or resource — free, certified, and sequenced in the order that matters. Tick things off as you go. The goal isn't to do all of it at once — it's to finish the right things in the right order.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-label">Overall progress</div>
+  <div class="progress-track">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-pct" id="progressPct">0%</div>
+</div>
+
+<!-- ===== SECTION 1: EMAIL & KLAVIYO ===== -->
+<div class="section">
+  <div class="section-head green" onclick="toggleSection(this)">
+    <div class="section-icon">📧</div>
+    <div class="section-meta">
+      <div class="section-title">Email Marketing & Klaviyo</div>
+      <div class="section-strap">The core of the role — get this right first</div>
+    </div>
+    <div class="section-counter" id="counter-email">0 / 9 done</div>
+  </div>
+  <div class="section-body" id="body-email">
+
+    <div class="subsection">
+      <div class="subsection-label">Start here — Week 1</div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo: Getting Started — Campaigns</div>
+          <div class="item-desc">The official beginner course. Covers the dashboard, building your first email, sending to a list. Do this before anything else.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://academy.klaviyo.com/en-us/collections/getting-started-with-klaviyo" target="_blank">→ Klaviyo Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~2 hrs</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo: Getting Started — Flows</div>
+          <div class="item-desc">Learn flow basics and build your first automated sequences. This is the highest-revenue skill in the role.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://academy.klaviyo.com/en-us/collections/getting-started-with-klaviyo" target="_blank">→ Klaviyo Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~2 hrs</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo: Sign-up Forms & List Growth</div>
+          <div class="item-desc">How to capture subscribers and grow the email list — a specific task mentioned in the JD.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://academy.klaviyo.com/en-us/collections/getting-started-with-klaviyo" target="_blank">→ Klaviyo Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~1 hr</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-label">Week 2–3 — Go deeper</div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo Practitioner Certificate</div>
+          <div class="item-desc">The full platform certification. Covers segmentation, flows, campaigns, analytics and deliverability. This is the one to put on your CV.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Official Cert</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://academy.klaviyo.com/en-us" target="_blank">→ Klaviyo Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~4 hrs</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo Mastery 3.0 (Udemy)</div>
+          <div class="item-desc">Free Udemy course going deeper on flows, AI tools, campaign strategy and list building. Great complement to the official Academy once you've done the basics.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <a class="link-btn" href="https://www.udemy.com/course/the-complete-klaviyo-email-marketing-course-for-e-commerce/" target="_blank">→ Udemy</a>
+          </div>
+        </div>
+        <div class="item-time">~3 hrs</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo AI for Marketing Course</div>
+          <div class="item-desc">Fundamentals-first AI course from Klaviyo Academy. Shows how to use AI tools to generate copy, optimise flows, and speed up production. Practical, not theoretical.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <a class="link-btn" href="https://academy.klaviyo.com/en-us" target="_blank">→ Klaviyo Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~2 hrs</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-label">Email writing craft — ongoing</div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Really Good Emails — daily reading habit</div>
+          <div class="item-desc">The best library of real-world email examples on the internet. Study 2–3 examples every day. Note what made you want to click and why.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <a class="link-btn" href="https://reallygoodemails.com" target="_blank">→ reallygoodemails.com</a>
+          </div>
+        </div>
+        <div class="item-time">Daily</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Klaviyo Email Best Practices Guide</div>
+          <div class="item-desc">Klaviyo's own guidance on list health, send frequency, deliverability and sign-up optimisation. Read this cover to cover in your first week.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <a class="link-btn" href="https://www.klaviyo.com/products/email-marketing/best-practices" target="_blank">→ Klaviyo.com</a>
+          </div>
+        </div>
+        <div class="item-time">~1 hr</div>
+      </div>
+
+      <div class="item" data-section="email">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Subscribe to 5 education/retail brands' emails</div>
+          <div class="item-desc">Sign up to competitors and brands you admire. Analyse every email you receive: subject line, timing, structure, call to action. Build a swipe file of things that work.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-essential">Essential habit</span>
+          </div>
+        </div>
+        <div class="item-time">Ongoing</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: ANALYTICS ===== -->
+<div class="section">
+  <div class="section-head blue" onclick="toggleSection(this)">
+    <div class="section-icon">📊</div>
+    <div class="section-meta">
+      <div class="section-title">Analytics & Data</div>
+      <div class="section-strap">GA4 + understanding what the numbers actually mean</div>
+    </div>
+    <div class="section-counter" id="counter-analytics">0 / 4 done</div>
+  </div>
+  <div class="section-body" id="body-analytics">
+
+    <div class="subsection">
+      <div class="subsection-label">Week 2 — Get reading the data</div>
+
+      <div class="item" data-section="analytics">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Google Analytics 4 — Official Certification (Skillshop)</div>
+          <div class="item-desc">Google's own free GA4 course. 4–5 hours, ends with an official Google certification. Covers setup, reports, events and conversions. This is the one to do.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Google Cert</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://skillshop.withgoogle.com/" target="_blank">→ Google Skillshop</a>
+          </div>
+        </div>
+        <div class="item-time">~5 hrs</div>
+      </div>
+
+      <div class="item" data-section="analytics">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">GA4 Fundamentals — Analytics Mania (free mini-course)</div>
+          <div class="item-desc">90 minutes of video, 30-question quiz and a certificate. Clearer and faster than Skillshop for getting the basics down. Do this first if GA4 feels overwhelming.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <a class="link-btn" href="https://www.analyticsmania.com/courses/free-google-analytics-fundamentals-course/" target="_blank">→ Analytics Mania</a>
+          </div>
+        </div>
+        <div class="item-time">~90 mins</div>
+      </div>
+
+      <div class="item" data-section="analytics">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Set up your own GA4 data view for Cosy</div>
+          <div class="item-desc">Ask your manager for read access to the Cosy GA4 account on day one. Find the acquisition report, behaviour report, and e-commerce conversions. Make notes on what you see.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">Week 1</div>
+      </div>
+
+      <div class="item" data-section="analytics">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Build a weekly email metrics tracker (spreadsheet)</div>
+          <div class="item-desc">Create a simple Google Sheet to log: open rate, click rate, revenue per email, unsubscribes — weekly. This becomes your reporting tool and proof of improvement at the 90-day review.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">Week 2</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: SEO ===== -->
+<div class="section">
+  <div class="section-head amber" onclick="toggleSection(this)">
+    <div class="section-icon">🔍</div>
+    <div class="section-meta">
+      <div class="section-title">SEO & Content Writing</div>
+      <div class="section-strap">Product descriptions, meta info, and how Google ranks pages</div>
+    </div>
+    <div class="section-counter" id="counter-seo">0 / 4 done</div>
+  </div>
+  <div class="section-body" id="body-seo">
+
+    <div class="subsection">
+      <div class="subsection-label">Week 3–4</div>
+
+      <div class="item" data-section="seo">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">HubSpot SEO Certification Course</div>
+          <div class="item-desc">Free, ~4 hours, 26 videos. The best structured beginner SEO certification. Covers keyword research, on-page SEO, link building and measurement. Recognised by employers.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://academy.hubspot.com/courses/seo-training" target="_blank">→ HubSpot Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~4 hrs</div>
+      </div>
+
+      <div class="item" data-section="seo">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Semrush SEO Fundamentals Course</div>
+          <div class="item-desc">Free with certificate. Goes deeper on keyword research and on-page SEO — directly relevant to writing product descriptions for Cosy's website.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <a class="link-btn" href="https://www.semrush.com/academy/courses/seo/" target="_blank">→ Semrush Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~3 hrs</div>
+      </div>
+
+      <div class="item" data-section="seo">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Read: Cosy's top 10 product pages — critically</div>
+          <div class="item-desc">Pick 10 products from the Cosy website. For each one: What's the title? Is it keyword-rich? Does the description sell the benefit or just describe the product? How's the meta description? Write your notes down.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">2 hrs</div>
+      </div>
+
+      <div class="item" data-section="seo">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Write your first 3 optimised product descriptions</div>
+          <div class="item-desc">Apply what you've learned. Pick 3 products that have weak copy. Rewrite each one: lead with the benefit, include the key search term naturally, keep it clear and specific. Show your manager for feedback.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">Week 4</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: PPC ===== -->
+<div class="section">
+  <div class="section-head purple" onclick="toggleSection(this)">
+    <div class="section-icon">💰</div>
+    <div class="section-meta">
+      <div class="section-title">PPC & Google Ads</div>
+      <div class="section-strap">Paid search basics — monitoring, reporting, understanding what you're looking at</div>
+    </div>
+    <div class="section-counter" id="counter-ppc">0 / 3 done</div>
+  </div>
+  <div class="section-body" id="body-ppc">
+
+    <div class="subsection">
+      <div class="subsection-label">Week 4–6 — After email and analytics are bedded in</div>
+
+      <div class="item" data-section="ppc">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Google Ads Search Certification — Skillshop</div>
+          <div class="item-desc">Google's official free course and certification for search campaigns. Covers keywords, bidding, ad copy, and campaign structure. The JD mentions PPC monitoring — this gives you the knowledge to do it properly.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Google Cert</span>
+            <span class="tag tag-essential">Essential</span>
+            <a class="link-btn" href="https://skillshop.withgoogle.com/googleads/" target="_blank">→ Google Skillshop</a>
+          </div>
+        </div>
+        <div class="item-time">~3 hrs</div>
+      </div>
+
+      <div class="item" data-section="ppc">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Google Shopping Ads Certification — Skillshop</div>
+          <div class="item-desc">Cosy sells physical products, so Shopping Ads (the product listings with images and prices) are likely core to the PPC strategy. Learn how these work specifically.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Google Cert</span>
+            <a class="link-btn" href="https://skillshop.withgoogle.com/googleads/" target="_blank">→ Google Skillshop</a>
+          </div>
+        </div>
+        <div class="item-time">~2 hrs</div>
+      </div>
+
+      <div class="item" data-section="ppc">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Get read access to Cosy's Google Ads account</div>
+          <div class="item-desc">Ask your manager to show you the live account. Find the key metrics: impressions, clicks, CTR, cost-per-click, conversions. Don't touch anything — just understand what you're looking at and ask questions.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">Week 5</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: SOCIAL ===== -->
+<div class="section">
+  <div class="section-head orange" onclick="toggleSection(this)">
+    <div class="section-icon">📱</div>
+    <div class="section-meta">
+      <div class="section-title">Social Media</div>
+      <div class="section-strap">Content creation, scheduling, community — the supporting role</div>
+    </div>
+    <div class="section-counter" id="counter-social">0 / 4 done</div>
+  </div>
+  <div class="section-body" id="body-social">
+
+    <div class="subsection">
+      <div class="subsection-label">Weeks 1–2 — Learn the landscape</div>
+
+      <div class="item" data-section="social">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">HubSpot Social Media Marketing Certification</div>
+          <div class="item-desc">Free, certified, well-structured. Covers strategy, content creation, scheduling and engagement. Good grounding even if you already use social personally — business social is different.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <span class="tag tag-cert">Certificate</span>
+            <a class="link-btn" href="https://academy.hubspot.com/courses/social-media" target="_blank">→ HubSpot Academy</a>
+          </div>
+        </div>
+        <div class="item-time">~4 hrs</div>
+      </div>
+
+      <div class="item" data-section="social">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Audit Cosy's existing social channels</div>
+          <div class="item-desc">Look at their Instagram, Facebook, LinkedIn and any others. What's performing? What format gets most engagement? What's the tone of voice? What's missing? Write a one-page observation — don't send it, just use it to understand the brand.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">2 hrs</div>
+      </div>
+
+      <div class="item" data-section="social">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Learn Canva — design basics for social</div>
+          <div class="item-desc">Canva is likely what Cosy uses for social graphics. The free plan is more than enough. Learn to create posts sized correctly for each platform. Canva has its own free tutorials built in.</div>
+          <div class="item-meta">
+            <span class="tag tag-free">Free</span>
+            <a class="link-btn" href="https://www.canva.com/designschool/" target="_blank">→ Canva Design School</a>
+          </div>
+        </div>
+        <div class="item-time">~2 hrs</div>
+      </div>
+
+      <div class="item" data-section="social">
+        <div class="cb-wrap"><div class="cb" onclick="tick(this)"></div></div>
+        <div class="item-body">
+          <div class="item-title">Draft your first month of social content ideas</div>
+          <div class="item-desc">Create a content calendar for one month — 3 posts per week across relevant channels. Map to the school calendar. Show your manager for review. Don't wait to be asked.</div>
+          <div class="item-meta">
+            <span class="tag tag-essential">Practical task</span>
+          </div>
+        </div>
+        <div class="item-time">Week 3</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING NOTE -->
+<div class="philosophy">
+  <strong>The order matters.</strong> Email and Klaviyo first — always. That's the core of the role and the thing Cosy will judge the 90 days on. Analytics second, because you can't improve what you can't measure. SEO third, because product copy is a quick win you can deliver early. PPC fourth — support role, not ownership. Social alongside everything, because it's lower stakes and you can learn by doing. <em>Don't try to learn all of this at once. Learn it in the order it appears here, and the knowledge will compound.</em>
+</div>
+
+<script>
+  // Load saved state
+  const saved = JSON.parse(localStorage.getItem('josie_learning') || '{}');
+
+  document.querySelectorAll('.cb').forEach((cb, i) => {
+    const item = cb.closest('.item');
+    const key = 'item_' + i;
+    if (saved[key]) {
+      cb.classList.add('checked');
+      item.classList.add('done');
+    }
+    cb.dataset.key = key;
+  });
+
+  function tick(cb) {
+    const item = cb.closest('.item');
+    const isChecked = cb.classList.toggle('checked');
+    item.classList.toggle('done', isChecked);
+    const state = JSON.parse(localStorage.getItem('josie_learning') || '{}');
+    state[cb.dataset.key] = isChecked;
+    localStorage.setItem('josie_learning', JSON.stringify(state));
+    updateAll();
+  }
+
+  function updateAll() {
+    const sections = ['email', 'analytics', 'seo', 'ppc', 'social'];
+    let total = 0, done = 0;
+
+    sections.forEach(sec => {
+      const items = document.querySelectorAll(`[data-section="${sec}"]`);
+      const doneItems = document.querySelectorAll(`[data-section="${sec}"].done`);
+      total += items.length;
+      done += doneItems.length;
+      const counter = document.getElementById('counter-' + sec);
+      if (counter) counter.textContent = `${doneItems.length} / ${items.length} done`;
+    });
+
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  function toggleSection(head) {
+    const body = head.nextElementSibling;
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+  }
+
+  updateAll();
+</script>
+</body>
+</html>
